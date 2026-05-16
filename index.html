@@ -3,54 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مدار الحجز - نسخة تجريبية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>مدار الحجز - نظام الدور الرقمي الذكي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="header">
-        <div class="logo-area">
-            <h1 class="brand-name">مدار الحجز</h1>
-            <span class="badge">نسخة تجريبية للعملاء</span>
+    <header class="main-header">
+        <div class="logo-container">
+            <h1 class="brand-logo">مدار الحجز</h1>
+            <span class="demo-badge">شاشة محاكاة حية للعملاء</span>
         </div>
+        <p class="header-desc">قم بالحجز من جهة المريض، ثم اضغط "شطب/التالي" من جهة العيادة لتجربة النظام</p>
     </header>
 
-    <main class="container">
-        <div class="doctor-card">
-            <div class="doctor-info">
-                <h2>عيادة الأمل الطبية</h2>
-                <p>د. محمد عبد الله - استشاري طب الأسنان</p>
-                <p class="price">سعر الكشف: 50 دينار</p>
+    <div class="app-grid">
+        
+        <section class="panel patient-panel">
+            <div class="panel-header">
+                <h2>📱 واجهة المريض (تليفون المريض)</h2>
             </div>
-        </div>
-
-        <div class="booking-section">
-            <h3>اختر موعدك المتاح:</h3>
-            <p class="subtitle">تاريخ اليوم: الأحد</p>
             
-            <div class="time-slots" id="time-grid">
+            <div class="live-status-card">
+                <div class="status-box current">
+                    <span>الدور الحالي في العيادة</span>
+                    <strong id="live-current-turn">1</strong>
                 </div>
-        </div>
-    </main>
+                <div class="status-box total">
+                    <span>إجمالي المسجلين اليوم</span>
+                    <strong id="live-total-queue">4</strong>
+                </div>
+            </div>
 
-    <div id="booking-modal" class="modal hidden">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h3>تأكيد الحجز</h3>
-            <p>الموعد المختار: <strong id="selected-time"></strong></p>
-            
-            <form id="booking-form">
-                <div class="input-group">
-                    <label for="patient-name">اسم المريض:</label>
-                    <input type="text" id="patient-name" required placeholder="أدخل اسمك الثلاثي">
+            <div class="booking-box">
+                <h3>حجز دور رقمي جديد:</h3>
+                <form id="patient-booking-form">
+                    <input type="text" id="p-name" placeholder=" اسم المريض الثلاثي" required>
+                    <input type="tel" id="p-phone" placeholder=" رقم الهاتف (09X)" required>
+                    <button type="submit" class="btn-primary">احجز دوري الآن</button>
+                </form>
+                <div id="my-ticket" class="tickethidden">
+                    <p>تم حجز دورك بنجاح! رقمك هو: <strong id="ticket-number">--</strong></p>
                 </div>
-                <div class="input-group">
-                    <label for="patient-phone">رقم الهاتف:</label>
-                    <input type="tel" id="patient-phone" required placeholder="09X XXX XXXX">
-                </div>
-                <button type="submit" class="confirm-btn">تأكيد الموعد الآن</button>
-            </form>
+            </div>
+        </section>
+
+        <section class="panel admin-panel">
+            <div class="panel-header">
+                <h2>🏢 لوحة تحكم العيادة (السكرتارية)</h2>
+            </div>
+
+            <div class="admin-controls">
+                <button id="next-btn" class="btn-dark">الشطب واستدعاء المريض التالي ➡️</button>
+            </div>
+
+            <div class="queue-list-wrapper">
+                <h3>قائمة الدور الحالية:</h3>
+                <ul class="queue-list" id="admin-queue-list">
+                    </ul>
+            </div>
+        </section>
+
+    </div>
+
+    <div id="sms-notification" class="notification-toast hidden">
+        <div class="notification-content">
+            <div class="bell-icon">🔔</div>
+            <div class="notification-text">
+                <h4>محاكاة إشعار ذكي (سيستم مدار)</h4>
+                <p id="notification-msg"></p>
+            </div>
         </div>
     </div>
 
